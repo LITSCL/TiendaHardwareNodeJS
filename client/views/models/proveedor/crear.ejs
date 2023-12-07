@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Crear Proveedor</title>
+    <%- include('../../includes/head_styles.ejs'); %>
+    <%- include('../../includes/head_scripts.ejs'); %>
+    <%- include('../../includes/head_random.ejs'); %>
+</head>
+<body>
+    <%- include('../../includes/header.ejs'); %>
+
+    <div class="contenido">
+
+        <div class="contenedor-formulario">
+            <h1>Crear Proveedor</h1>
+            <%
+            if (sesion.crearProveedor == "Exitoso") {
+            %>
+                <strong class="alerta alerta-verde">Proveedor creado exitosamente</strong>
+            <%
+            }
+            if (sesion.crearProveedor == "Fallido") {
+            %>
+                <strong class="alerta alerta-roja">Error al crear el proveedor</strong>
+            <%
+            }
+            %>
+            <form action="<%=url%>/proveedor/save" method="POST">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" required/>
+                <label for="telefono">Telefono</label>
+                <input type="text" name="telefono" required/>
+                <label for="correo">Correo</label>
+                <input type="email" name="correo" required/>
+                <button type="submit">Crear</button>
+            </form>
+        </div>
+
+    </div>
+
+<%
+delete sesion.crearProveedor;
+%>
+</body>
+</html>

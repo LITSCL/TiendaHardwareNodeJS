@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Mostrar Carrito</title>
+    <%- include('../../includes/head_styles.ejs'); %>
+    <%- include('../../includes/head_scripts.ejs'); %>
+    <%- include('../../includes/head_random.ejs'); %>
+</head>
+<body>
+    <%- include('../../includes/header.ejs'); %>
+    
+    <div class="contenido">
+    
+        <div id="contenedorMostrarCarrito" class="contenedor-pagina-centrada">
+        <%
+        if (sesion.limiteUnidades) {
+        %>
+            <strong class="alerta alerta-amarilla">Lo sentimos, no tenemos suficientes unidades de ese producto</strong>
+        <%
+        }
+        %>
+
+        <%
+        if (sesion.carrito && sesion.carrito.length >= 1) {
+        %>
+            <table class="tabla">
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Unidades</th>
+                    <th>Acción</th>
+                </tr>
+            <%
+            for (var i = 0; i < sesion.carrito.length; i++) {
+                var producto = sesion.carrito[i];
+            %>
+            <tr>
+                <td>
+                    <img class="imagen-carrito" src="<%=url%>/producto/get-file-imagen/<%=producto.imagen%>"/>
+                </td>
+                <td>
+                    <a href="#"><%=producto.nombre%></a>
+                </td>
+                <td>
+                    $<%=new Intl.NumberFormat("es-CL").format(producto.precio)%>
+                </td>
+                <td>
+                    <%=producto.unidades%>
+                    <div id="cambiarUnidades">
+                        <a class="boton boton-verde" href="<%=url%>/carrito/save-unidad/<%=i%>">+</a>
+                        <a class="boton boton-verde" href="<%=url%>/carrito/delete-unidad/<%=i%>">-</a>
+                    </div>            
+                </td>
+                <td>
+                    <a class="boton boton-carrito boton-rojo" href="<%=url%>/carrito/delete-producto/<%=i%>">Eliminar</a>
+                </td>
+            </tr>
+            <%
+            }
+            %>
+            </table>
+            
+            <div id="vaciarCarrito">
+                <a class="boton boton-vaciar boton-rojo" href="<%=url%>/carrito/delete-carrito">Vaciar carrito</a>
+            </div>
+            
+            <div id="totalCarrito">
+                <a class="boton boton-pedido" href="<%=url%>/pedido/hacer">Hacer pedido</a>
+                <h3 id="total">$<%=new Intl.NumberFormat("es-CL").format(carritoHelper.obtenerTotal(sesion.carrito))%></h3>
+            </div>
+        <%
+        }
+        else {
+        %>
+            <h1 class="titulo-pagina-centrada">El carrito esta vacío</h1>
+        <%
+        }
+        %>
+        </div>
+        
+    </div>
+
+<%
+delete sesion.limiteUnidades;
+%>
+</body>
+</html>

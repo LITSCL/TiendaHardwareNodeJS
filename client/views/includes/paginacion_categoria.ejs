@@ -1,0 +1,96 @@
+<% 
+if (sesion.errorPaginaInexistente) {
+    delete sesion.errorPaginaInexistente;
+%>
+    <h1 class="titulo-pagina-centrada">No se han encontrado resultados en esta página</h1>
+<%
+}
+else if (sesion.errorSinResultados) {
+    delete sesion.errorSinResultados;
+%>
+    <div class="contenedor-paginacion-objetos">
+        <h1 class="titulo-pagina-centrada">No hay categorias</h1>
+    </div>
+<%
+}
+else if (categorias.length > 0 && formato == "tarjeta") {
+%>
+    <div class="contenedor-paginacion-objetos">
+        //
+    </div>
+
+    <div class="contenedor-paginacion-paginas">
+        <%- generarNumeros(); %>
+    </div>
+<%
+}
+else if (categorias.length > 0 && formato == "tabla") {
+%>
+    <div class="contenedor-paginacion-objetos">
+        <table class="tabla">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acción 1</th>
+                <th>Acción 2</th>
+            </tr>
+        <%
+        for (var i = 0; i < categorias.length; i++) {
+            var categoria = categorias[i];
+        %>
+            <tr>
+                <td><%=categoria.id%></td>
+                <td><%=categoria.nombre%></td>
+                <td><a class="boton boton-amarillo" href="<%=url + "/categoria/modificar/" + categoria.id%>">Modificar</a></td>
+                <td><a class="boton boton-rojo" href="<%=url + "/categoria/delete/" + categoria.id%>">Eliminar</a></td>
+            </tr>
+        <%
+        }
+        %>
+        </table>
+    </div>
+
+    <div class="contenedor-paginacion-paginas">
+        <%- generarNumeros(); %>
+    </div>
+<%
+}
+%>
+
+<%
+function generarNumeros() {
+    var resultado = "";
+    var actual = "";
+
+    if (paginaActual <= totalPaginas) {
+        resultado = "<ul>";
+        for (var i = 1; i <= totalPaginas; i++) {
+            if (i == paginaActual) {
+                actual = "class='actual'"; 
+            }
+            else {
+                actual = "";
+            }
+            if (paginaActual == 1 && paginaActual == i) {
+                if (vista == "") {
+                    resultado+=`<li><a class='actual' href='${url}${vista}/${i}'>${i}</a></li>`;
+                }
+                else {
+                    resultado+=`<li><a class='actual' href='${url}/${vista}/${i}'>${i}</a></li>`;
+                }
+            }
+            else {
+                if (vista == "") {
+                    resultado+=`<li><a ${actual} href='${url}${vista}/${i}'>${i}</a></li>`;
+                }
+                else {
+                    resultado+=`<li><a ${actual} href='${url}/${vista}/${i}'>${i}</a></li>`;
+                }
+            }
+        }
+        resultado+="</ul>";
+    }
+
+    return resultado;
+}
+%>

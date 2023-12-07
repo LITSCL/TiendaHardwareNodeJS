@@ -1,0 +1,113 @@
+<%
+var categorias = categorias;
+%>
+
+<header>
+<%
+if (!sesion.usuario) {
+%>
+    <nav id="navDefecto">
+        <input id="checkbox" type="checkbox">
+        <label class="boton-checkbox" for="checkbox"> 
+            <i class="fas fa-bars"></i> 
+        </label>
+        <div class="contenido-navegacion">
+            <div class="navegacion">
+                <ul>
+                    <li><a href="<%=url%>">Inicio</a></li>
+                <%
+                for (var i = 0; i < categorias.length; i++) {
+                %>
+                    <li><a href="<%=url%>/categoria/mostrar/<%=categorias[i].id%>"><%=categorias[i].nombre%></a></li>
+                <%
+                }
+                %>
+                </ul>
+            </div>
+    
+            <div class="usuario">
+                <ul>
+                    <li><a class="accion" href="<%=url%>/carrito/mostrar"><i class="fas fa-shopping-cart" title="Carrito"></i></a></li>
+                    <li><a href="<%=url%>/usuario/iniciar-sesion">Iniciar Sesión</a></li>
+                    <li><a href="<%=url%>/usuario/registrarse">Registrarse</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+<%
+}
+%>
+
+<%
+if (sesion.usuario && sesion.usuario.tipo == "Cliente") {
+%>
+    <nav id="navCliente">
+        <input id="checkbox" type="checkbox">
+        <label class="boton-checkbox" for="checkbox"> 
+            <i class="fas fa-bars"></i> 
+        </label>
+        <div class="contenido-navegacion">
+            <div class="navegacion">
+                <ul>
+                    <li><a href="<%=url%>">Inicio</a></li>
+                <%
+                    for (var i = 0; i < categorias.length; i++) {
+                %>
+                    <li><a href="<%=url%>/categoria/mostrar/<%=categorias[i].id%>"><%=categorias[i].nombre%></a></li>
+                <%
+                }
+                %>
+                </ul>
+            </div>
+    
+            <div class="usuario">
+                <ul>
+                    <li><a class="accion" href="<%=url%>/carrito/mostrar"><i class="fas fa-shopping-cart" title="Carrito"></i></a></li>
+                    <li><a class="accion" href="<%=url%>/pedido/mis-pedidos"><i class="fas fa-parachute-box" title="Pedidos"></i></a></li>
+                    <li><a class="accion" href="<%=url%>/producto/favoritos"><i class="fas fa-heart" title="Favoritos"></i></a></li>
+                    <li><a href="<%=url%>/usuario/editar-perfil"><%=sesion.usuario.primerNombre%></a></li>
+                    <li><img class="avatar" src="<%=url%>/usuario/get-file-imagen/<%=sesion.usuario.imagen%>"/></li>
+                    <li><a href="<%=url%>/usuario/logout"><img class="cerrar" src="<%=url%>/assets/img/close.png" title="Cerrar Sesión"/></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+<%
+}
+%>
+
+<%
+if (sesion.usuario && sesion.usuario.tipo == "Administrador") {
+%>
+    <nav id="navAdministrador">
+        <input id="checkbox" type="checkbox">
+        <label class="boton-checkbox" for="checkbox"> 
+            <i class="fas fa-bars"></i> 
+        </label>
+        <div class="contenido-navegacion">
+            <div class="navegacion">
+                <ul>
+                    <li><a href="<%=url%>">Inicio</a></li>
+                    <li><a href="<%=url%>/categoria/crear">Crear Categoría</a></li>
+                    <li><a href="<%=url%>/producto/crear">Crear Producto</a></li>
+                    <li><a href="<%=url%>/proveedor/crear">Crear Proveedor</a></li>
+                    <li><a href="<%=url%>/categoria/listar">Listar Categorias</a></li>
+                    <li><a href="<%=url%>/producto/listar">Listar Productos</a></li>
+                    <li><a href="<%=url%>/proveedor/listar">Listar Proveedores</a></li>
+                    <li><a href="<%=url%>/pedido/listar">Listar Pedidos</a></li>
+                </ul>
+            </div>
+    
+            <div class="usuario">
+                <ul>
+                    <li><a href="<%=url%>/usuario/editar-perfil"><%=sesion.usuario.primerNombre%></a></li>
+                    <li><img class="avatar" src="<%=url%>/usuario/get-file-imagen/<%=sesion.usuario.imagen%>"/></li>
+                    <li><a href="<%=url%>/usuario/logout"><img class="cerrar" src="<%=url%>/assets/img/close.png" title="Cerrar Sesión"/></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+<%
+}
+%>
+</header>

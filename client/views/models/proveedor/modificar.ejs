@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Modificar Proveedor</title>
+    <%- include('../../includes/head_styles.ejs'); %>
+    <%- include('../../includes/head_scripts.ejs'); %>
+    <%- include('../../includes/head_random.ejs'); %>
+</head>
+<body>
+    <%- include('../../includes/header.ejs'); %>
+
+    <div class="contenido">
+
+        <div class="contenedor-formulario">
+            <h1>Modificar Proveedor</h1>
+            <%
+            if (sesion.modificarProveedor == "Exitoso") {
+            %>
+                <strong class="alerta alerta-verde">Proveedor modificado exitosamente</strong>
+            <%
+            }
+            if (sesion.modificarProveedor == "Fallido") {
+            %>
+                <strong class="alerta alerta-roja">Error al modificar el proveedor</strong>
+            <%
+            }
+            %>
+            <form action="<%=url%>/proveedor/update" method="POST">
+                <input type="hidden" name="id" value="<%=proveedor.id%>" readonly/>
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" value="<%=proveedor.nombre%>" required/>
+                <label for="telefono">Telefono</label>
+                <input type="text" name="telefono" value="<%=proveedor.telefono%>" required/>
+                <label for="correo">Correo</label>
+                <input type="email" name="correo" value="<%=proveedor.correo%>" required/>
+                <button type="submit">Modificar</button>
+            </form>
+        </div>
+
+    </div>
+
+<%
+delete sesion.modificarProveedor;
+%>
+</body>
+</html>

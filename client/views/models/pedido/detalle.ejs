@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Detalle Pedido</title>
+    <%- include('../../includes/head_styles.ejs'); %>
+    <%- include('../../includes/head_scripts.ejs'); %>
+    <%- include('../../includes/head_random.ejs'); %>
+</head>
+<body>
+    <%- include('../../includes/header.ejs'); %>
+    
+    <div class="contenido">
+
+        <div class="contenedor-pagina-centrada">
+            <%
+            if (sesion.errorDetallePedido == "El pedido no te pertenece") {
+            %>
+                <h1 class="titulo-pagina-centrada">El pedido que buscas no te pertenece</h1>
+            <%
+            }
+            else if (sesion.errorDetallePedido == "El pedido no existe") {
+            %>
+                <h1 class="titulo-pagina-centrada">El pedido que buscas no existe</h1>
+            <%
+            }
+            else {
+            %>
+                <%
+                if (datosPedido) {
+                %>
+                    <h1 class="titulo-pagina-centrada">Detalle del pedido</h1>
+                    <br/>
+                    <h3>Datos del pedido:</h3>
+                    <div class="contenedor-datos-pedido">
+                        Numero de pedido: <%=datosPedido.id%>
+                        <br/>
+                        Total a pagar: $<%=new Intl.NumberFormat("es-CL").format(datosPedido.coste)%>
+                        <br/>
+                        Estado del pedido: <%=datosPedido.estado%>
+                        <br/>
+                        Productos:
+                        <table class="tabla">
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Unidades</th>
+                            </tr>
+                        <%
+                        productosPedido.forEach(function(producto) {
+                        %>
+                            <tr>
+                                <td>
+                                    <img class="imagen-carrito" src="<%=url%>/producto/get-file-imagen/<%=producto.imagen%>"/>
+                                </td>
+                                <td>
+                                    <%=producto.nombre%>
+                                </td>
+                                <td>
+                                    $<%=new Intl.NumberFormat("es-CL").format(producto.precio)%>
+                                </td>
+                                <td>
+                                    <%=producto.unidades%>
+                                </td>
+                            </tr>
+                        <%
+                        });
+                        %>
+                        </table>
+                    </div>
+                <%
+                }
+                %>
+            <%
+            }
+            %>
+        </div>
+
+    </div>
+
+<%
+delete sesion.errorDetallePedido;
+%>
+</body>

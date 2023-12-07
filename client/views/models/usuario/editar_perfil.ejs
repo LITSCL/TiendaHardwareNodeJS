@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Editar Perfil</title>
+    <%- include('../../includes/head_styles.ejs'); %>
+    <%- include('../../includes/head_scripts.ejs'); %>
+    <%- include('../../includes/head_random.ejs'); %>
+</head>
+<body>
+    <%- include('../../includes/header.ejs'); %>
+    
+    <div class="contenido">
+
+        <div class="contenedor-formulario">
+            <h1>Editar Perfil</h1>
+            <%
+            if (sesion.usuario && sesion.editarPerfil == "Exitoso") {
+            %>
+                <strong class="alerta alerta-verde">Perfil editado exitosamente</strong>
+            <%
+            }
+            if (sesion.usuario && sesion.editarPerfil == "Fallido") {
+            %>
+                <strong class="alerta alerta-roja">Error al editar el perfil</strong>
+            <%
+            }
+            %>
+            <form action="<%=url%>/usuario/update" method="POST" enctype="multipart/form-data">
+                <label for="correo">Correo</label>
+                <input type="email" name="correo" value="<%=usuario.correo%>" required/>
+                <label for="clave">Contraseña</label>
+                <input type="password" name="clave" value="Clave no cambiada" required/>
+                <label for="primerNombre">Primer Nombre</label>
+                <input type="text" name="primerNombre" value="<%=usuario.primerNombre%>" required/>
+                <label for="segundoNombre">Segundo Nombre</label>
+                <input type="text" name="segundoNombre" value="<%=usuario.segundoNombre%>" required/>
+                <label for="apellidoPaterno">Apellido Paterno</label>
+                <input type="text" name="apellidoPaterno" value="<%=usuario.apellidoPaterno%>" required/>
+                <label for="apellidoMaterno">Apellido Materno</label>
+                <input type="text" name="apellidoMaterno" value="<%=usuario.apellidoMaterno%>" required/>
+                <label for="imagen">Imagen</label>
+                <input type="file" name="imagen"/>
+                <div class="contenedor-modificar-imagen">
+                    <img src="<%=url%>/usuario/get-file-imagen/<%=usuario.imagen%>"/>
+                </div>
+                <button type="submit">Editar</button>
+            </form>
+        </div>
+
+    </div>
+
+<%
+delete sesion.editarPerfil;
+%>
+</body>
+</html>

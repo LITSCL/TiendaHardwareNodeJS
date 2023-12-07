@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Listar Categorías</title>
+    <%- include('../../includes/head_styles.ejs'); %>
+    <%- include('../../includes/head_scripts.ejs'); %>
+    <%- include('../../includes/head_random.ejs'); %>
+</head>
+<body>
+    <%- include('../../includes/header.ejs'); %>
+    
+    <div class="contenido">
+
+        <%
+        if (sesion.eliminarCategoria == "Exitoso") {
+        %>
+            <strong class="alerta alerta-verde">Categoría eliminada exitosamente</strong>
+        <%
+        }
+        if (sesion.eliminarCategoria == "Fallido") {
+        %>
+            <strong class="alerta alerta-roja">Error al eliminar la categoría</strong>
+        <%
+        }
+        %>
+
+        <%- include('../../includes/paginacion_categoria.ejs'); %>
+        
+    </div>
+
+<%
+delete sesion.eliminarCategoria;
+%>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Listar Productos</title>
+    <%- include('../../includes/head_styles.ejs'); %>
+    <%- include('../../includes/head_scripts.ejs'); %>
+    <%- include('../../includes/head_random.ejs'); %>
+</head>
+<body>
+    <%- include('../../includes/header.ejs'); %>
+    
+    <div class="contenido">
+
+        <%
+        if (sesion.eliminarProducto == "Exitoso") {
+        %>
+            <strong class="alerta alerta-verde">Producto eliminado exitosamente</strong>
+        <%
+        }
+        if (sesion.eliminarProducto == "Fallido") {
+        %>
+            <strong class="alerta alerta-roja">Error al eliminar el producto</strong>
+        <%
+        }
+        %>
+    
+        <%- include('../../includes/paginacion_producto.ejs'); %>
+        
+    </div>
+
+<%
+delete sesion.eliminarProducto;
+%>
+</body>
+</html>

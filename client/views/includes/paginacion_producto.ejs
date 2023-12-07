@@ -1,0 +1,174 @@
+<% 
+if (sesion.errorPaginaInexistente) {
+    delete sesion.errorPaginaInexistente;
+%>
+    <h1 class="titulo-pagina-centrada">No se han encontrado resultados en esta página</h1>
+<%
+}
+else if (sesion.errorSinResultados) {
+    delete sesion.errorSinResultados;
+%>
+    <div class="contenedor-paginacion-objetos">
+        <h1 class="titulo-pagina-centrada">No hay productos</h1>
+    </div>
+<%
+}
+else if (productos.length > 0 && formato == "tarjeta") {
+%>
+    <div class="contenedor-paginacion-objetos">
+    <%
+    for (var i = 0; i < productos.length; i++) {
+        var producto = productos[i];
+        var descipcionSeparada = (producto.descripcion).split(";");
+    %>
+        <div class="tarjeta">
+
+            <div class="tarjeta-cabecera">
+                <div class="contenedor-corazon">
+                    <%
+                    var favorito = false;
+                    if (sesion.usuario && sesion.usuario.tipo == "Cliente") {
+                        productosUsuario.forEach(function(productoUsuario) {
+                            if (productoUsuario.producto_id == producto.id && productoUsuario.usuario_id == sesion.usuario.id) {
+                                favorito = true;
+                                return;
+                            }
+                        });
+                    }
+                    %>
+                    <%
+                    if (favorito) {
+                    %>
+                        <img class="boton-like" data-idProducto="<%=producto.id%>" src="<%=url%>/assets/img/heart-red.png"/>
+                    <%
+                    }
+                    else {
+                    %>
+                        <img class="boton-dislike" data-idProducto="<%=producto.id%>" src="<%=url%>/assets/img/heart-gray.png"/>
+                    <%
+                    }
+                    %>
+                </div>
+                <h1><%=producto.nombre%></h1>
+            </div>
+
+            <div class="tarjeta-cuerpo">
+                <img src="<%=url%>/producto/get-file-imagen/<%=producto.imagen%>"/>
+                <h1>Descripción</h1>
+                <ul>
+                <%
+                descipcionSeparada.forEach(function(descripcion) {
+                %>
+                    <li><%=descripcion%></li>
+                <%
+                });
+                %>
+                </ul>
+                <div class="contenedor-precio">
+                    $<%=new Intl.NumberFormat("es-CL").format(producto.precio)%>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="contenedor-disponibilidad">
+                    <span>Disponibilidad: </span> <%=producto.stock%>
+                </div>	
+            </div>
+
+            <div class="tarjeta-pie">
+                <div>
+                    <a class="boton boton-verde" href="<%=url%>/carrito/save-producto/<%=producto.id%>">Agregar al carrito</a>
+                </div>
+            </div>
+            
+        </div>
+    <%
+    }
+    %>
+    </div>
+
+    <div class="contenedor-paginacion-paginas">
+        <%- generarNumeros(); %>
+    </div>
+<%
+}
+else if (productos.length > 0 && formato == "tabla") {
+%>
+    <div class="contenedor-paginacion-objetos">
+        <table class="tabla">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Imagen</th>
+                <th>Categoría</th>
+                <th>Acción 1</th>
+                <th>Acción 2</th>
+            </tr>
+        <%
+        for (var i = 0; i < productos.length; i++) {
+            var producto = productos[i];
+        %>
+            <tr>
+                <td><%=producto.id%></td>
+                <td><%=producto.nombre%></td>
+                <td><%=producto.descripcion%></td>
+                <td>$<%=new Intl.NumberFormat("es-CL").format(producto.precio)%></td>
+                <td><%=producto.stock%></td>
+                <td><img src="<%=url%>/producto/get-file-imagen/<%=producto.imagen%>"/></td>
+                <td><%=producto.categoriaFK%></td>
+                <td><a class="boton boton-amarillo" href="<%=url + "/producto/modificar/" + producto.id%>">Modificar</a></td>
+                <td><a class="boton boton-rojo" href="<%=url + "/producto/delete/" + producto.id%>">Eliminar</a></td>
+            </tr>
+        <%
+        }
+        %>
+        </table>
+    </div>
+
+    <div class="contenedor-paginacion-paginas">
+        <%- generarNumeros(); %>
+    </div>
+<%
+}
+%>
+
+<%
+function generarNumeros() {
+    var resultado = "";
+    var actual = "";
+
+    if (paginaActual <= totalPaginas) {
+        resultado = "<ul>";
+        for (var i = 1; i <= totalPaginas; i++) {
+            if (i == paginaActual) {
+                actual = "class='actual'"; 
+            }
+            else {
+                actual = "";
+            }
+            if (paginaActual == 1 && paginaActual == i) {
+                if (vista == "") {
+                    resultado+=`<li><a class='actual' href='${url}${vista}/${i}'>${i}</a></li>`;
+                }
+                else {
+                    resultado+=`<li><a class='actual' href='${url}/${vista}/${i}'>${i}</a></li>`;
+                }
+            }
+            else {
+                if (vista == "") {
+                    resultado+=`<li><a ${actual} href='${url}${vista}/${i}'>${i}</a></li>`;
+                }
+                else {
+                    resultado+=`<li><a ${actual} href='${url}/${vista}/${i}'>${i}</a></li>`;
+                }
+            }
+        }
+        resultado+="</ul>";
+    }
+
+    return resultado;
+}
+%>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Crear Producto</title>
+    <%- include('../../includes/head_styles.ejs'); %>
+    <%- include('../../includes/head_scripts.ejs'); %>
+    <%- include('../../includes/head_random.ejs'); %>
+</head>
+<body>
+    <%- include('../../includes/header.ejs'); %>
+    
+    <div class="contenido">
+    
+        <div class="contenedor-formulario">
+            <h1>Crear Producto</h1>
+            <%
+            if (sesion.crearProducto == "Exitoso") {
+            %>
+                <strong class="alerta alerta-verde">Producto creado exitosamente</strong>
+            <%
+            }
+            if (sesion.crearProducto == "Fallido") {
+            %>
+                <strong class="alerta alerta-roja">Error al crear el producto</strong>
+            <%
+            }
+            %>
+            <form action="<%=url%>/producto/save" method="POST" enctype="multipart/form-data">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" required/>
+                <label for="descripcion">Descripción</label>
+                <textarea name="descripcion" required></textarea>
+                <label for="precio">Precio</label>
+                <input type="number" name="precio" min="500"/>
+                <label for="stock">Stock</label>
+                <input type="number" name="stock" min="1"/>
+                <label for="categoria">Categoría</label>
+                <select name="categoria">
+                <%
+                for (var i = 0; i < categorias.length; i++) {
+                %>
+                    <option value="<%=categorias[i].id%>"><%=categorias[i].nombre%></option>
+                <%
+                }
+                %>
+                </select>
+                <label for="imagen">Imagen</label>
+                <input type="file" name="imagen" required/>
+                <button type="submit">Crear</button>
+            </form>
+        </div>
+        
+    </div>
+</body>
+</html>

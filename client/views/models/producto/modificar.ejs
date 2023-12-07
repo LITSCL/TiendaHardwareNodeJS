@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Modificar Producto</title>
+    <%- include('../../includes/head_styles.ejs'); %>
+    <%- include('../../includes/head_scripts.ejs'); %>
+    <%- include('../../includes/head_random.ejs'); %>
+</head>
+<body>
+    <%- include('../../includes/header.ejs'); %>
+    
+    <div class="contenido">
+    
+        <div class="contenedor-formulario">
+            <h1>Modificar Producto</h1>
+            <%
+            if (sesion.modificarProducto == "Exitoso") {
+            %>
+                <strong class="alerta alerta-verde">Producto modificada exitosamente</strong>
+            <%
+            }
+            if (sesion.modificarProducto == "Fallido") {
+            %>
+                <strong class="alerta alerta-roja">Error al modificar el producto</strong>
+            <%
+            }
+            %>
+            <form action="<%=url%>/producto/update" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="<%=producto.id%>" readonly/>
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" value="<%=producto.nombre%>" required/>
+                <label for="descripcion">Descripción</label>
+                <textarea name="descripcion" required><%=producto.descripcion%></textarea>
+                <label for="precio">Precio</label>
+                <input type="number" name="precio" value="<%=producto.precio%>" min="500"/>
+                <label for="stock">Stock</label>
+                <input type="number" name="stock" value="<%=producto.stock%>" min="1"/>
+                <label for="categoria">Categoría</label>
+                <select name="categoria">
+                <%
+                for (var i = 0; i < categorias.length; i++) {
+                %>
+                    <%
+                    if (categorias[i].id == producto.categoriaFK) {
+                    %>
+                        <option value="<%=categorias[i].id%>" selected><%=categorias[i].nombre%></option>
+                    <%
+                    }
+                    else {
+                    %>
+                        <option value="<%=categorias[i].id%>"><%=categorias[i].nombre%></option>
+                    <%
+                    }
+                    %>
+                <%
+                }
+                %>
+                </select>
+                <label for="imagen">Imagen</label>
+                <input type="file" name="imagen"/>
+                <div class="contenedor-modificar-imagen">
+                    <img src="<%=url%>/producto/get-file-imagen/<%=producto.imagen%>"/>
+                </div>
+                <button type="submit">Modificar</button>
+            </form>
+        </div>
+        
+    </div>
+
+<%
+delete sesion.modificarProducto;
+%>
+</body>
+</html>

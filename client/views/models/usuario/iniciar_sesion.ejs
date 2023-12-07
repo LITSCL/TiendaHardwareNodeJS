@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Iniciar Sesión</title>
+    <%- include('../../includes/head_styles.ejs'); %>
+    <%- include('../../includes/head_scripts.ejs'); %>
+    <%- include('../../includes/head_random.ejs'); %>
+</head>
+<body>
+    <%- include('../../includes/header.ejs'); %>
+
+    <div class="contenido">
+    
+        <div class="contenedor-formulario">
+            <h1>Iniciar Sesión</h1>
+            <%
+            if (sesion.errorLogin) {
+            %>
+            	<strong class="alerta alerta-roja"><%=sesion.errorLogin%></strong>
+            <%
+            }
+            %>
+            <form action="<%=url%>/usuario/login" method="POST">
+                <label for="correo">Correo</label>
+                <input type="email" name="correo"/>
+                <label for="clave">Contraseña</label>
+                <input type="password" name="clave"/>
+                <button type="submit">Iniciar Sesión</button>
+            </form>
+        </div>
+
+    </div>
+
+<%
+delete sesion.errorLogin;
+%>
+</body>
+</html>

@@ -1,0 +1,198 @@
+@media (max-width: 1690px) { 
+    #navCliente .contenido-navegacion {
+        grid-template-columns: 75% 25%;
+    }
+    
+    #navDefecto .contenido-navegacion {
+        grid-template-columns: 75% 25%;
+    }
+}
+
+@media (max-width: 1509px) { 
+    #navCliente .contenido-navegacion {
+        grid-template-columns: 71% 29%;
+    }
+}
+
+@media (max-width: 1500px) { 
+    #navAdministrador .boton-checkbox {
+        display: block;
+    }
+    
+    #navAdministrador #checkbox:checked ~ .contenido-navegacion {
+        left: 0%;
+    }
+    
+    #navAdministrador .contenido-navegacion {
+        display: block;
+        background: #222;
+        position: absolute;
+        width: 100%;
+        min-height: 100vh;
+        top: 59px;
+        left: -100%;
+        transition: all 300ms;
+    }
+    
+    #navAdministrador .contenido-navegacion .navegacion {
+        width: 100%;
+        float: left;
+    }
+        
+    #navAdministrador .contenido-navegacion .navegacion ul {
+        width: 100%;
+        margin-top: 5px;
+        margin-left: 0px;
+    }
+    
+    #navAdministrador .contenido-navegacion .navegacion ul li {
+        width: 100%;
+    }
+    
+    #navAdministrador .contenido-navegacion .usuario {
+        width: 100%;
+        float: left;
+    }
+}
+
+@media (max-width: 1300px) { 
+    #navDefecto .contenido-navegacion {
+        grid-template-columns: 67% 33%;
+    }
+}
+
+@media (max-width: 1230px) { 
+    #navCliente .contenido-navegacion {
+        grid-template-columns: 67% 33%;
+    }
+}
+
+@media (max-width: 1190px) { 
+    header #navDefecto .contenido-navegacion {
+        grid-template-columns: 63% 37%;
+    }
+}
+
+@media (max-width: 1070px) { 
+    #navDefecto .boton-checkbox {
+        display: block;
+    }
+    
+    #navDefecto #checkbox:checked ~ .contenido-navegacion {
+        left: 0%;
+    }
+    
+    #navDefecto .contenido-navegacion {
+        display: block;
+        background: #222;
+        position: absolute;
+        width: 100%;
+        min-height: 100vh;
+        top: 59px;
+        left: -100%;
+        transition: all 300ms;
+    }
+    
+    #navDefecto .contenido-navegacion .navegacion {
+        width: 100%;
+        float: left;
+    }
+        
+    #navDefecto .contenido-navegacion .navegacion ul {
+        width: 100%;
+        margin-top: 5px;
+        margin-left: 0px;
+    }
+    
+    #navDefecto .contenido-navegacion .navegacion ul li {
+        width: 100%;
+    }
+    
+    #navDefecto .contenido-navegacion .usuario {
+        width: 100%;
+        float: left;
+    }
+}
+
+@media (max-width: 1015px) { 
+    #navCliente .contenido-navegacion {
+        grid-template-columns: 63% 37%;
+    }
+}
+
+@media (max-width: 970px) { 
+    #navCliente .boton-checkbox {
+        display: block;
+    }
+    
+    #navCliente #checkbox:checked ~ .contenido-navegacion {
+        left: 0%;
+    }
+    
+    #navCliente .contenido-navegacion {
+        display: block;
+        background: #222;
+        position: absolute;
+        width: 100%;
+        min-height: 100vh;
+        top: 59px;
+        left: -100%;
+        transition: all 300ms;
+    }
+    
+    #navCliente .contenido-navegacion .navegacion {
+        width: 100%;
+        float: left;
+    }
+        
+    #navCliente .contenido-navegacion .navegacion ul {
+        width: 100%;
+        margin-top: 5px;
+        margin-left: 0px;
+    }
+    
+    #navCliente .contenido-navegacion .navegacion ul li {
+        width: 100%;
+    }
+    
+    #navCliente .contenido-navegacion .usuario {
+        width: 100%;
+        float: left;
+    }
+}
+
+@media (max-width: 940px) {
+    #contenedorTablaPedidos {
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y: hidden;     
+    }
+}
+
+@media (max-width: 890px) { 
+    .contenedor-pagina-centrada {
+        width: 97%;
+    }
+}
+
+@media (max-width: 790px) {
+    #contenedorTablaProductos {
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y: hidden;     
+    }
+}
+
+@media (max-width: 575px) {
+    #contenedorTablaProveedores {
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y: hidden;     
+    }
+}
+
+@media (max-width: 550px) { 
+    .contenedor-formulario {
+        width: 97%;
+    }
+}

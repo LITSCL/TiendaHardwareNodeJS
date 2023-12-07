@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Registrarse</title>
+    <%- include('../../includes/head_styles.ejs'); %>
+    <%- include('../../includes/head_scripts.ejs'); %>
+    <%- include('../../includes/head_random.ejs'); %>
+</head>
+<body>
+    <%- include('../../includes/header.ejs'); %>
+
+    <div class="contenido">
+    
+        <div class="contenedor-formulario">
+            <h1>Registrarse</h1>
+            <%
+            if (sesion.registro == "Exitoso") {
+            %>
+            	<strong class="alerta alerta-verde">Registro exitoso</strong>
+            <%
+            }
+            if (sesion.registro == "Fallido") {
+            %>
+            	<strong class="alerta alerta-roja">Registro fallido</strong>
+            <%
+            }
+            %>
+            <form action="<%=url%>/usuario/save" method="POST">
+                <label for="correo">Correo</label>
+                <input type="email" name="correo" required/>
+                <label for="clave">Contraseña</label>
+                <input type="password" name="clave" required/>
+                <label for="primerNombre">Primer Nombre</label>
+                <input type="text" name="primerNombre" required/>
+                <label for="segundoNombre">Segundo Nombre</label>
+                <input type="text" name="segundoNombre" required/>
+                <label for="apellidoPaterno">Apellido Paterno</label>
+                <input type="text" name="apellidoPaterno" required/>
+                <label for="apellidoMaterno">Apellido Materno</label>
+                <input type="text" name="apellidoMaterno" required/>
+                <button type="submit">Registrarse</button>
+            </form>
+        </div>
+
+    </div>
+
+<%
+delete sesion.registro;
+%>
+</body>
+</html>

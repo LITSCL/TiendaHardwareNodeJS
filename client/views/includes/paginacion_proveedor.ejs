@@ -1,0 +1,100 @@
+<% 
+if (sesion.errorPaginaInexistente) {
+    delete sesion.errorPaginaInexistente;
+%>
+    <h1 class="titulo-pagina-centrada">No se han encontrado resultados en esta página</h1>
+<%
+}
+else if (sesion.errorSinResultados) {
+    delete sesion.errorSinResultados;
+%>
+    <div class="contenedor-paginacion-objetos">
+        <h1 class="titulo-pagina-centrada">No hay proveedores</h1>
+    </div>
+<%
+}
+else if (proveedores.length > 0 && formato == "tarjeta") {
+%>
+    <div class="contenedor-paginacion-objetos">
+        //
+    </div>
+
+    <div class="contenedor-paginacion-paginas">
+        <%- generarNumeros(); %>
+    </div>
+<%
+}
+else if (proveedores.length > 0 && formato == "tabla") {
+%>
+    <div class="contenedor-paginacion-objetos">
+        <table class="tabla">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Telefono</th>
+                <th>Correo</th>
+                <th>Acción 1</th>
+                <th>Acción 2</th>
+            </tr>
+        <%
+        for (var i = 0; i < proveedores.length; i++) {
+            var proveedor = proveedores[i];
+        %>
+            <tr>
+                <td><%=proveedor.id%></td>
+                <td><%=proveedor.nombre%></td>
+                <td><%=proveedor.telefono%></td>
+                <td><%=proveedor.correo%></td>
+                <td><a class="boton boton-amarillo" href="<%=url + "/proveedor/modificar/" + proveedor.id%>">Modificar</a></td>
+                <td><a class="boton boton-rojo" href="<%=url + "/proveedor/delete/" + proveedor.id%>">Eliminar</a></td>
+            </tr>
+        <%
+        }
+        %>
+        </table>
+    </div>
+
+    <div class="contenedor-paginacion-paginas">
+        <%- generarNumeros(); %>
+    </div>
+<%
+}
+%>
+
+<%
+function generarNumeros() {
+    var resultado = "";
+    var actual = "";
+
+    if (paginaActual <= totalPaginas) {
+        resultado = "<ul>";
+        for (var i = 1; i <= totalPaginas; i++) {
+            if (i == paginaActual) {
+            actual = "class='actual'"; 
+            }
+            else {
+                actual = "";
+            }
+            if (paginaActual == 1 && paginaActual == i) {
+                if (vista == "") {
+                    resultado+=`<li><a class='actual' href='${url}${vista}/${i}'>${i}</a></li>`;
+                }
+                else {
+                    resultado+=`<li><a class='actual' href='${url}/${vista}/${i}'>${i}</a></li>`;
+                }
+            }
+            else {
+                if (vista == "") {
+                    resultado+=`<li><a ${actual} href='${url}${vista}/${i}'>${i}</a></li>`;
+                }
+                else {
+                    resultado+=`<li><a ${actual} href='${url}/${vista}/${i}'>${i}</a></li>`;
+                }
+            }
+        }
+        resultado+="</ul>";
+    }
+
+    return resultado;
+}
+%>

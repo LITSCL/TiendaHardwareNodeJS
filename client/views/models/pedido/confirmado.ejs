@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Pedido Confirmado</title>
+    <%- include('../../includes/head_styles.ejs'); %>
+    <%- include('../../includes/head_scripts.ejs'); %>
+    <%- include('../../includes/head_random.ejs'); %>
+</head>
+<body>
+    <%- include('../../includes/header.ejs'); %>
+    
+    <div class="contenido">
+
+        <div id="contenedorPedidoConfirmado" class="contenedor-pagina-centrada">
+            <h1 class="titulo-pagina-centrada">Resultado del pedido</h1>
+        <% 
+        if (sesion.crearPedido == "Exitoso") {
+        %>
+            <strong class="alerta alerta-verde">Pedido realizado exitosamente</strong>
+            <p>
+                Una vez que recibamos tu pago en la cuenta bancaria <strong>56283715001</strong>, el pedido será procesado y despachado a tu domicilio.
+            </p>
+            <%
+            if (datosPedido) {
+            %>
+                <br/>
+                <h3>Datos del pedido:</h3>
+                <div class="contenedor-datos-pedido">
+                    Numero de pedido: <%=datosPedido.id%>
+                    <br/>
+                    Total a pagar: $<%=new Intl.NumberFormat("es-CL").format(datosPedido.coste)%>
+                    <br/>
+                    Estado del pedido: <%=datosPedido.estado%>
+                    <br/>
+                    Productos:
+                    <table class="tabla">
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Unidades</th>
+                        </tr>
+                    <%
+                    productosPedido.forEach(function(producto) {
+                    %>
+                        <tr>
+                            <td>
+                                <img class="imagen-carrito" src="<%=url%>/producto/get-file-imagen/<%=producto.imagen%>"/>
+                            </td>
+                            <td>
+                                <%=producto.nombre%>
+                            </td>
+                            <td>
+                                $<%=new Intl.NumberFormat("es-CL").format(producto.precio)%>
+                            </td>
+                            <td>
+                                <%=producto.unidades%>
+                            </td>
+                        </tr>
+                    <%
+                    });
+                    %>
+                    </table>
+                </div>	
+            <%
+            }
+            %>
+        <%
+        }
+        if (sesion.crearPedido == "Fallido") {
+        %>
+        <strong class="alerta alerta-roja">Error al realizar el pedido</strong>
+            <p>
+                Por favor, intenta realizar el pedido mas tarde.
+            </p>
+        <%
+        }
+        %>
+    </div>
+
+<%
+delete sesion.crearPedido;
+%>
+</body>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Listar Proveedores</title>
+    <%- include('../../includes/head_styles.ejs'); %>
+    <%- include('../../includes/head_scripts.ejs'); %>
+    <%- include('../../includes/head_random.ejs'); %>
+</head>
+<body>
+    <%- include('../../includes/header.ejs'); %>
+
+    <div class="contenido">
+
+        <%
+        if (sesion.eliminarProveedor == "Exitoso") {
+        %>
+            <strong class="alerta alerta-verde">Proveedor eliminado exitosamente</strong>
+        <%
+        }
+        if (sesion.eliminarProveedor == "Fallido") {
+        %>
+            <strong class="alerta alerta-roja">Error al eliminar el proveedor</strong>
+        <%
+        }
+        %>
+
+        <%- include('../../includes/paginacion_proveedor.ejs'); %>
+
+    </div>
+    
+<%
+delete sesion.eliminarProveedor;
+%>
+</body>
+</html>

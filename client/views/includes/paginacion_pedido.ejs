@@ -1,0 +1,143 @@
+<% 
+if (sesion.errorPaginaInexistente) {
+    delete sesion.errorPaginaInexistente;
+%>
+    <h1 class="titulo-pagina-centrada">No se han encontrado resultados en esta página</h1>
+<%
+}
+else if (sesion.errorSinResultados) {
+    delete sesion.errorSinResultados;
+%>
+    <div class="contenedor-paginacion-objetos">
+        <h1 class="titulo-pagina-centrada">No hay pedidos</h1>
+    </div>
+<%
+}
+else if (pedidos.length > 0 && formato == "tarjeta") {
+%>
+    <div class="contenedor-paginacion-objetos">
+        //
+    </div>
+
+    <div class="contenedor-paginacion-paginas">
+        <%- generarNumeros(); %>
+    </div>
+<%
+}
+else if (pedidos.length > 0 && formato == "tabla") {
+%>
+    <%
+    if (sesion.usuario.tipo == "Administrador") {
+    %>
+        <div class="contenedor-paginacion-objetos">
+            <table class="tabla">
+                <tr>
+                    <th>ID</th>
+                    <th>Ciudad</th>
+                    <th>Comuna</th>
+                    <th>Calle</th>
+                    <th>Coste</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Usuario</th>
+                    <th>Acción 1</th>
+                </tr>
+            <%
+            for (var i = 0; i < pedidos.length; i++) {
+                var pedido = pedidos[i];
+            %>
+                <tr>
+                    <td><%=pedido.id%></td>
+                    <td><%=pedido.ciudad%></td>
+                    <td><%=pedido.comuna%></td>
+                    <td><%=pedido.calle%></td>
+                    <td>$<%=new Intl.NumberFormat("es-CL").format(pedido.coste)%></td>
+                    <td><%=pedido.estado%></td>
+                    <td><%=pedido.fecha%></td>
+                    <td><%=pedido.hora%></td>
+                    <td><%=pedido.usuarioFK%></td>
+                    <td><a class="boton boton-amarillo" href="<%=url%>/pedido/gestionar/<%=pedido.id%>">Gestionar</a></td>
+                </tr>
+            <%
+            }
+            %>
+            </table>
+        </div>
+    <%
+    }
+    if (sesion.usuario.tipo == "Cliente") {
+    %>
+        <div class="contenedor-pagina-centrada">
+            <div class="contenedor-paginacion-objetos">
+                <table class="tabla">
+                    <tr>
+                        <th>N° Pedido</th>
+                        <th>Coste</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                    </tr>
+                <%
+                for (var i = 0; i < pedidos.length; i++) {
+                    var pedido = pedidos[i];
+                %>
+                    <tr>
+                        <td><a class="numeroPedidoRedireccionador" href="<%=url%>/pedido/detalle/<%=pedido.id%>"><%=pedido.id%></a></td>
+                        <td>$<%=new Intl.NumberFormat("es-CL").format(pedido.coste)%></td>
+                        <td><%=pedido.fecha%></td>
+                        <td><%=pedido.estado%></td>
+                    </tr>
+                <%
+                }
+                %>
+                </table>
+            </div>	
+        </div>
+    <%
+    }
+    %>
+
+    <div class="contenedor-paginacion-paginas">
+        <%- generarNumeros(); %>
+    </div>
+<%
+}
+%>
+
+<%
+function generarNumeros() {
+    var resultado = "";
+    var actual = "";
+
+    if (paginaActual <= totalPaginas) {
+        resultado = "<ul>";
+        for (var i = 1; i <= totalPaginas; i++) {
+            if (i == paginaActual) {
+                actual = "class='actual'"; 
+            }
+            else {
+                actual = "";
+            }
+            if (paginaActual == 1 && paginaActual == i) {
+                if (vista == "") {
+                    resultado+=`<li><a class='actual' href='${url}${vista}/${i}'>${i}</a></li>`;
+                }
+                else {
+                    resultado+=`<li><a class='actual' href='${url}/${vista}/${i}'>${i}</a></li>`;
+                }
+            }
+            else {
+                if (vista == "") {
+                    resultado+=`<li><a ${actual} href='${url}${vista}/${i}'>${i}</a></li>`;
+                }
+                else {
+                    resultado+=`<li><a ${actual} href='${url}/${vista}/${i}'>${i}</a></li>`;
+                }
+            }
+        }
+        resultado+="</ul>";
+    }
+
+    return resultado;
+}
+%>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Gestionar Pedido</title>
+    <%- include('../../includes/head_styles.ejs'); %>
+    <%- include('../../includes/head_scripts.ejs'); %>
+    <%- include('../../includes/head_random.ejs'); %>
+</head>
+<body>
+    <%- include('../../includes/header.ejs'); %>
+    
+    <div class="contenido">
+
+        <div class="contenedor-pagina-centrada">
+            <h1 class="titulo-pagina-centrada">Gestionar el pedido</h1>
+        <%
+        if (datosPedido) {
+        %>
+            <br/>
+            <h3>Cambiar estado del pedido:</h3>
+            <form class="formulario-gestionar-pedido" action="<%=url%>/pedido/update" method="POST">
+                <input type="hidden" name="id" value="<%=datosPedido.id%>"/>
+                <select name="estado">
+                    <option value="Confirmado" <%=datosPedido.estado == "Confirmado" ? "selected" : "";%>>Confirmado</option>
+                    <option value="En preparación" <%=datosPedido.estado == "En preparación" ? "selected" : "";%>>En preparación</option>
+                    <option value="Preparado para enviar" <%=datosPedido.estado == "Preparado para enviar" ? "selected" : "";%>>Preparado para enviar</option>
+                    <option value="Enviado" <%=datosPedido.estado == "Enviado" ? "selected" : "";%>>Enviado</option>
+                </select>
+                <button type="submit">Cambiar</button>
+            </form>
+            <br/>
+            <h3>Datos del pedido:</h3>
+            <div class="contenedor-datos-pedido">
+                Numero de pedido: <%=datosPedido.id%>
+                <br/>
+                Total a pagar: $<%=new Intl.NumberFormat("es-CL").format(datosPedido.coste)%>
+                <br/>
+                Estado del pedido: <%=datosPedido.estado%>
+                <br/>
+                Productos:
+                <table class="tabla">
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Unidades</th>
+                    </tr>
+                <%
+                productosPedido.forEach(function(producto) {
+                %>
+                    <tr>
+                        <td>
+                            <img class="imagen-carrito" src="<%=url%>/producto/get-file-imagen/<%=producto.imagen%>"/>
+                        </td>
+                        <td>
+                            <%=producto.nombre%>
+                        </td>
+                        <td>
+                            $<%=new Intl.NumberFormat("es-CL").format(producto.precio)%>
+                        </td>
+                        <td>
+                            <%=producto.unidades%>
+                        </td>
+                    </tr>
+                <%
+                });
+                %>
+                </table>
+            </div>	
+        <%
+        }
+        %>
+    </div>
+
+</body>

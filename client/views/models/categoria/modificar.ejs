@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Modificar Categoría</title>
+    <%- include('../../includes/head_styles.ejs'); %>
+    <%- include('../../includes/head_scripts.ejs'); %>
+    <%- include('../../includes/head_random.ejs'); %>
+</head>
+<body>
+    <%- include('../../includes/header.ejs'); %>
+    
+    <div class="contenido">
+    
+        <div class="contenedor-formulario">
+            <h1>Modificar Categoría</h1>
+            <%
+            if (sesion.modificarCategoria == "Exitoso") {
+            %>
+                <strong class="alerta alerta-verde">Categoría modificada exitosamente</strong>
+            <%
+            }
+            if (sesion.modificarCategoria == "Fallido") {
+            %>
+                <strong class="alerta alerta-roja">Error al modificar la categoría</strong>
+            <%
+            }
+            %>
+            <form action="<%=url%>/categoria/update" method="POST">
+                <input type="hidden" name="id" value="<%=categoria.id%>" readonly/>
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" value="<%=categoria.nombre%>" required/>
+                <button type="submit">Modificar</button>
+            </form>
+        </div>
+        
+    </div>
+
+<%
+delete sesion.modificarCategoria;
+%>
+</body>
+</html>
